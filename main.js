@@ -154,7 +154,7 @@ function createStatElements() {
     const element = document.querySelector("yt-formatted-string#info");
     if (element && element.children.length > 2) {
       element.appendChild(outer);
-      clearInterval(interval);
+      clearInterval(createInterval);
     }
   }, 50);
 
