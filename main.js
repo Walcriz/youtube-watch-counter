@@ -1,4 +1,4 @@
-const procentToCount = 0.95;
+const procentToCount = 0.90;
 const startPart = 0.10;
 
 var watchtime = 0;
@@ -12,12 +12,14 @@ var loaded = false;
 function wait() {
   // Wait until video starts playing
   const interval = setInterval(() => {
-    console.log("Waiting...");
+    if (!window.location.href.startsWith("https://www.youtube.com/watch"))
+      return;
+
     if (document.getElementsByTagName("video")) {
       createHooks();
       clearInterval(interval);
     }
-  }, 50); // check every 50 ms
+  }, 100);
 }
 
 function createHooks() {
@@ -26,8 +28,6 @@ function createHooks() {
   hook(video, "onpause", () => playing = false);
 
   setup(video, window.location.href);
-
-  console.log("Hooks created");
 }
 
 function setup(video, url) {
@@ -57,12 +57,12 @@ function loop(video, url, ads) {
     stats = null;
   }
 
-  stats = createStatElements();
+  createStatElements();
 
   var lastTime = video.currentTime;
   loopInterval = setInterval(() => {
     if (url !== window.location.href) {
-      setup(video, window.location.href);
+      wait();
     }
 
     if (!playing || video.duration < 1)
@@ -91,7 +91,6 @@ function loop(video, url, ads) {
 function load(url, name) {
   return new Promise((resolve, reject) => {
     browser.runtime.sendMessage({ action: "load", url: url, name: name }, response => {
-      console.log(response)
       if (browser.runtime.lastError) {
         reject(new Error(chrome.runtime.lastError.message));
       } else {
@@ -106,16 +105,26 @@ function save(url, name, data) {
 }
 
 function hook(video, name, callback) {
-  const func = video[name];
   video[name] = function() {
     callback();
-
-    if (func)
-      func();
   };
 }
 
+const outerId = "sadhfkasdfhslkdfjsalhdkhasdf-youtube-watch-counter-stats";
+var createInterval = null;
 function createStatElements() {
+  if (stats) {
+    // Remove stats
+    stats.outer.remove();
+    stats = null;
+
+    const element = document.getElementById(outerId);
+    if (element) {
+      element.remove();
+      return;
+    }
+  }
+
   const timeElement = document.createElement("p");
   timeElement.textContent = formatTime(watchtime) + " watched";
   timeElement.classList.add("yt-formatted-string");
@@ -128,6 +137,7 @@ function createStatElements() {
 
   const outer = document.createElement("div");
   outer.style = "display: inline-block; align-items: right;";
+  outer.classList.add(outerId);
   const divider = document.createElement("span");
   divider.innerHTML = " • ";
   const space = document.createElement("span");
@@ -137,17 +147,18 @@ function createStatElements() {
   outer.appendChild(space);
   outer.appendChild(loopsElement);
 
-  const interval = setInterval(() => {
-    const element = document.querySelector("yt-formatted-string#info");
-    if (element) {
-      clearInterval(interval);
+  if (createInterval)
+    clearInterval(createInterval);
 
-      // Wait 10ms async and then set element
+  createInterval = setInterval(() => {
+    const element = document.querySelector("yt-formatted-string#info");
+    if (element && element.children.length > 2) {
       element.appendChild(outer);
+      clearInterval(interval);
     }
   }, 50);
 
-  return {
+  stats = {
     time: timeElement,
     loops: loopsElement,
     outer: outer
