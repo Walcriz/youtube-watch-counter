@@ -15,14 +15,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Compress the specified files into a zip archive
-      - name: Compress files into a zip
-        run: |
-          zip -r extension.zip LICENCE.md README.md background.js main.js manifest.json popup.css popup.html popup.js
-
       # Upload the compressed file as an artifact for sharing
       - name: Upload compressed file
         uses: actions/upload-artifact@v3
         with:
-          name: compressed-files
-          path: extension.zip
+          name: youtube-watch-counter
+          path: ./
