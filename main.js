@@ -67,7 +67,7 @@ function loop(video, url, ads) {
 
     if (!playing || video.duration < 1)
       return;
-    if (window.getComputedStyle(ads).display !== "none")
+    if (ads && window.getComputedStyle(ads).display !== "none")
       return;
 
     watchtime++;
