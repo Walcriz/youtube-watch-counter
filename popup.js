@@ -26,15 +26,13 @@ browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
   }
 
   load(currentUrl, "watchtime").then(value => {
-    document.getElementById("time").innerHTML = formatTime(value);
+    document.getElementById("time").textContent = formatTime(value);
   })
   load(currentUrl, "loops").then(value => {
     const suffix = value == 1 ? " time" : " times";
-    document.getElementById("loops").innerHTML = value + suffix;
+    document.getElementById("loops").textContent = value + suffix;
   })
 });
-
-document.getElementById("loops").innerHTML = "hello";
 
 function load(url, name) {
   return new Promise((resolve, reject) => {
