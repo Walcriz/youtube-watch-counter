@@ -20,13 +20,14 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 function load(url, name) {
-  return browser.storage.sync.get(url + "/" + name);
+  const v = new URL(url).searchParams.get("v");
+  return browser.storage.local.get(v + "/" + name);
 }
 
 function save(url, name, data) {
-  console.log(url + "/" + name, data);
-  browser.storage.sync.set({
-    [url + "/" + name]: data
+  const v = new URL(url).searchParams.get("v");
+  browser.storage.local.set({
+    [v + "/" + name]: data
   });
 }
 
