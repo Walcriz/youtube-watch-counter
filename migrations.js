@@ -7,19 +7,27 @@ function migrateV1(keys) {
   for (const key in keys) {
     if (key == "version") continue;
 
-    const url = new URL(key);
+    // Split key at last /
+    const splitKey = key.split("/");
+    const type = splitKey[splitKey.length - 1];
+    // Key is the part before the last /
+    const link = splitKey.slice(0, splitKey.length - 1).join('/');
+
+    const url = new URL(link);
     const name = url.searchParams.get('v');
     var value = keys[key];
     if (!value || typeof value != "number") value = 0;
 
     if (name) {
-      if (migrated[name]) {
-        migrated[name] = migrated[name] + value;
+      const migratedKey = name + "/" + type;
+      if (migrated[migratedKey]) {
+        migrated[migratedKey] = migrated[migratedKey] + value;
+        console.log("Migrated " + key + " to " + migratedKey + "(Duplicate)");
         continue;
       }
 
-      migrated[name] = value;
-      console.log("Migrated " + key + " to " + name);
+      migrated[migratedKey] = value;
+      console.log("Migrated " + key + " to " + migratedKey);
     } else {
       console.log("Failed to migrate " + key);
     }
