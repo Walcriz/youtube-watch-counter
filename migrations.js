@@ -1,7 +1,3 @@
-function load(name) {
-  return browser.storage.local.get(name);
-}
-
 function migrateV1(keys) {
   const migrated = {};
   for (const key in keys) {
@@ -39,7 +35,7 @@ function migrateV1(keys) {
 }
 
 // Load version
-load("version").then(version => {
+browser.storage.local.get("version").then(version => {
   // Migration #1
   if (!version) {
     // Loop all keys in storage

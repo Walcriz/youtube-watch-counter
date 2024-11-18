@@ -23,14 +23,27 @@ browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
   } else {
     document.getElementById("stats").style.display = "block";
     document.getElementById("error").style.display = "none";
+
+    load(currentUrl, "watchtime").then(value => {
+      document.getElementById("time").textContent = formatTime(value);
+    })
+    load(currentUrl, "loops").then(value => {
+      const suffix = value == 1 ? " time" : " times";
+      document.getElementById("loops").textContent = value + suffix;
+    })
   }
 
-  load(currentUrl, "watchtime").then(value => {
-    document.getElementById("time").textContent = formatTime(value);
-  })
-  load(currentUrl, "loops").then(value => {
-    const suffix = value == 1 ? " time" : " times";
-    document.getElementById("loops").textContent = value + suffix;
+  browser.runtime.sendMessage({ action: "stats" }).then(stats => {
+    if (stats.mostWatched.watchtime === 0) {
+      document.getElementById("most-watched").style.display = "none";
+    }
+    document.getElementById("total-videos").textContent = stats.totalVideos;
+    document.getElementById("total-watchtime").textContent = formatTime(stats.totalWatchtime);
+    document.getElementById("total-loops").textContent = stats.totalLoops;
+    const mostWatched = document.getElementById("most-watched-video")
+    mostWatched.textContent = stats.mostWatched.video;
+    mostWatched.href = stats.mostWatched.video;
+    document.getElementById("most-watched-watchtime").textContent = formatTime(stats.mostWatched.watchtime);
   })
 });
 

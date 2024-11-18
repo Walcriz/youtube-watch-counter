@@ -1,3 +1,68 @@
 .inspiration {
   display: inline-block;
 }
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  margin: 20px;
+  line-height: 1.6;
+}
+
+p {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+b {
+  color: #0078d7;
+}
+
+#error {
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+  color: #842029;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.error {
+  font-weight: bold;
+}
+
+.error.inspiration {
+  margin-top: 10px;
+  font-style: italic;
+}
+
+a {
+  color: #0078d7;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a.error {
+  color: #d63384;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a.error:hover {
+  text-decoration: underline;
+}
+
+#link {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
