@@ -32,10 +32,15 @@ function migrateV1(keys) {
   migrated["version"] = 2;
 
   browser.storage.local.set(migrated);
+  console.log("V1 to V2 migration done!")
 }
+
+console.log("Migration script loaded");
 
 // Load version
 browser.storage.local.get("version").then(version => {
+  console.log("Current version: " + version);
+  console.log("Migrating...");
   // Migration #1
   if (!version) {
     // Loop all keys in storage

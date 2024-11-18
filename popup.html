@@ -7,13 +7,23 @@
   </head>
 
   <body>
-    <p id="stats">You have watched this video for <b id="time">0s</b> and looped it <b id="loops">0 times</b> in total</p>
-    <p id="total-stats">You have watched <b id="total-videos">0</b> videos with a total watchtime of <b id="total-watchtime">0s</b> and loop count of <b id="total-loops">0 times</b></p>
-    <p id="most-watched">The most watched video is <a id="most-watched-video"></a> with a total watchtime of <b id="most-watched-watchtime">0s</b></p>
-    <div id="error" style="display: none;">
-      <b style="display: block;" class="error">Hmmm, I don't think this is a youtube video...</b>
-      <div class="error inspiration">Need inspiration? </div>
-      <a id="link" class="error" href="https://www.youtube.com/watch?v=B3kE_zxORik">Check this out!</a>
+    <div id="home">
+      <p id="stats">You have watched this video for <b id="time">0s</b> and looped it <b id="loops">0 times</b> in total</p>
+      <p id="total-stats">You have watched <b id="total-videos">0</b> videos with a total watchtime of <b id="total-watchtime">0s</b> and loop count of <b id="total-loops">0 times</b></p>
+      <div id="most-watched">
+        <p>The most watched video is <a id="most-watched-video"></a> with a total watchtime of <b id="most-watched-watchtime">0s</b></p>
+        <button id="most-watched-btn">&gt;</button>
+      </div>
+      <div id="error" style="display: none;">
+        <b style="display: block;" class="error">Hmmm, I don't think this is a youtube video...</b>
+        <div class="error inspiration">Need inspiration? </div>
+        <a id="link" class="error" href="https://www.youtube.com/watch?v=B3kE_zxORik">Check this out!</a>
+      </div>
+    </div>
+    <div style="display: none;" id="top">
+      <!-- List of top videos -->
+      <b>Top videos</b>
+      <ul id="top-videos"></ul>
     </div>
   </body>
 </html>

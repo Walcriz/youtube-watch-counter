@@ -1,14 +1,16 @@
 const links = [
   "https://www.youtube.com/watch?v=B3kE_zxORik",
   "https://www.youtube.com/watch?v=Ci_zad39Uhw",
-  "https://www.youtube.com/watch?v=SwXCXcGU5ww",
   "https://www.youtube.com/watch?v=NCLBok_C9Hg",
+  "https://www.youtube.com/watch?v=xpKfRwX_8Ws",
   "https://www.youtube.com/watch?v=NFWiDdxqgfY",
   "https://www.youtube.com/watch?v=pfQQ7QURSro",
   "https://www.youtube.com/watch?v=qPdPjWkJZF8",
   "https://www.youtube.com/watch?v=-jGBp5HBLFs",
   "https://www.youtube.com/watch?v=7pmd0kt3FOs",
-  "https://www.youtube.com/watch?v=OGj0xMWReQM"
+  "https://www.youtube.com/watch?v=OGj0xMWReQM",
+  "https://www.youtube.com/watch?v=I3ZozsgDDqI",
+  "https://www.youtube.com/watch?v=fzQ6gRAEoy0"
 ];
 
 browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
@@ -45,7 +47,47 @@ browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
     mostWatched.href = stats.mostWatched.video;
     document.getElementById("most-watched-watchtime").textContent = formatTime(stats.mostWatched.watchtime);
   })
+
+  document.getElementById("most-watched-btn").addEventListener("click", switchToTopView);
 });
+
+function switchToTopView() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("top").style.display = "block";
+  console.log("Switched to top view");
+
+  browser.runtime.sendMessage({ action: "top" }).then(top => {
+    for (const video of top) {
+      // Create a list item
+      const li = document.createElement("li");
+
+      // Add the video link
+      const link = document.createElement("a");
+      link.href = video.url;
+      link.textContent = video.id;
+      link.target = "_blank"; // Open link in a new tab
+      link.style.fontWeight = "bold"; // Optional styling
+      li.appendChild(link);
+
+      // Add the watch time
+      const time = document.createElement("span");
+      time.textContent = ` | ${formatTime(video.watchtime)} watched`;
+      time.style.marginLeft = "10px"; // Optional styling
+      li.appendChild(time);
+
+      if (video.loops) {
+        // Add the loop count
+        const loops = document.createElement("span");
+        loops.textContent = ` | ${video.loops} loops`;
+        loops.style.marginLeft = "10px"; // Optional styling
+        li.appendChild(loops);
+      }
+
+      // Append the list item to the top-videos list
+      document.getElementById("top-videos").appendChild(li);
+    }
+  })
+}
 
 function load(url, name) {
   return new Promise((resolve, reject) => {

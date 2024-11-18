@@ -66,3 +66,97 @@ a.error:hover {
   margin-top: 10px;
   text-align: center;
 }
+
+#most-watched p {
+  margin: 0px;
+  padding: 0px;
+  background-color: #fff;
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+/* Styling for the most-watched paragraph */
+#most-watched {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the button */
+#most-watched-btn {
+  background-color: #0078d7;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#most-watched-btn:hover {
+  background-color: #005bb5;
+}
+
+#most-watched-btn:active {
+  background-color: #004a94;
+}
+
+#most-watched-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 120, 215, 0.4);
+}
+
+/* Styling for the unordered list */
+#top-videos {
+  list-style: none; /* Remove default list styling */
+  padding: 0;
+  margin: 10px 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Ensure items don't overflow the box */
+}
+
+#top-videos li {
+  margin-bottom: 10px;
+  padding: 5px;
+  border-bottom: 1px solid #ddd; /* Divider between items */
+}
+
+#top-videos li a {
+  color: #007BFF; /* Link color */
+  text-decoration: none;
+}
+
+#top-videos li a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+#top-videos li span {
+  color: #555; /* Muted text color for details */
+  font-size: 0.9em;
+}
+
+#top-videos li:last-child {
+  border-bottom: none; /* Remove the border for the last item */
+}
+
+/* Hover effect for list items */
+#top-videos li:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Highlighting key content within list items */
+#top-videos li b {
+  color: #0078d7;
+  font-weight: bold;
+}
