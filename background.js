@@ -36,12 +36,12 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
               add(id, "loops", value);
               break;
           }
-
-          if (top.length >= max)
-            break;
         }
 
         top.sort((a, b) => b.watchtime - a.watchtime);
+
+        // only take first max elements
+        top = top.slice(0, max);
 
         resolve(top);
       }, error => { console.log(error); });
