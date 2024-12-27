@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Youtube Watch Counter",
-  "version": "1.3",
+  "version": "1.3.1",
 
   "description": "Counts how many times you have watched a video on youtube. And how much time you have watched it.",
 
